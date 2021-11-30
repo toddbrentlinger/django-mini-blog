@@ -1,0 +1,24 @@
+Blog
+	title: CharField
+	postDate: DateField
+	author: BlogAuthor[1]
+	description: TextField
+	comments: BlogComment[0..*]
+	META:
+		-postDate
+
+BlogAuthor
+	uniqueId: String
+	name: CharField
+	blogPosts: Blog[1..*]
+	bio: TextField
+	META:
+		name
+
+BlogComment
+	author: CharField
+	postDateTime: DateTimeField
+	description: TextField
+	blogPost: Blog[1]
+	META:
+		postDate
