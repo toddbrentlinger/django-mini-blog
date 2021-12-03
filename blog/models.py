@@ -14,7 +14,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=200, help_text='Enter title of blog post.')
     post_date = models.DateField(auto_now_add=True, verbose_name='Post Date')
     author = models.ForeignKey('BlogAuthor', on_delete=models.CASCADE)
-    description = models.TextField(max_length=1000, help_text='Enter main content text of blog post.')
+    description = models.TextField(max_length=10000, help_text='Enter main content text of blog post.')
 
     class Meta:
         ordering = ['-post_date']
