@@ -8,14 +8,25 @@ admin.site.register(User, UserAdmin)
 # admin.site.register(BlogComment)
 # admin.site.register(BlogAuthor)
 
+class BlogPostInline(admin.TabularInline):
+    model = BlogPost
+    extra = 0
+
+class BlogCommentInline(admin.TabularInline):
+    model = BlogComment
+    extra = 0
+
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'author', 'post_date', 'id')
+    list_filter = ('post_date',)
+    inlines = [BlogCommentInline]
 
 @admin.register(BlogComment)
 class BlogCommentAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('blog_post', 'author', 'post_date_time')
+    list_filter = ('post_date_time',)
 
 @admin.register(BlogAuthor)
 class BlogAuthorAdmin(admin.ModelAdmin):
-    pass
+    inlines = [BlogPostInline]
