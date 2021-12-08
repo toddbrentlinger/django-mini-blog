@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Django Mini Blog Home</h1>
+<p>Welcome to Django Mini Blog, a website developed using Django!</p>
+<h2>Dynamic Content</h2>
+<p>The mini blog has the following:</p>
+<ul>
+    <li><strong>Posts:</strong> {{ num_posts }}</li>
+    <li><strong>Authors:</strong> {{ num_authors }}</li>
+    <li><strong>Comments:</strong> {{ num_comments }}</li>
+</ul>
+{% endblock %}
