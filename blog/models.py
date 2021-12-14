@@ -1,6 +1,7 @@
 import uuid # Used for unique blog post instances
 
 from django.db import models
+from django.urls import reverse # Used to generate URLs by reversing the URL patterns
 from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
@@ -39,8 +40,7 @@ class BlogPost(models.Model):
 
     def get_absolute_url(self):
         """Returns the url to access a particular instance of BlogPost."""
-        # return reverse('blog-post-detail-view', args=[str(self.id)])
-        pass
+        return reverse('blogpost-detail', args=[str(self.id)])
 
     def __str__(self):
         """String for representing the Model object."""
