@@ -19,8 +19,7 @@ class BlogAuthor(models.Model):
 
     def get_absolute_url(self):
         """Returns the url to access a particular instance of BlogAuthor."""
-        # return reverse('blog-author-detail-view', args=[str(self.id)])
-        pass
+        return reverse('blogauthor-detail', args=[str(self.id)])
 
     def __str__(self):
         """String for representing the Model object."""

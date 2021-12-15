@@ -4,7 +4,7 @@
     <h1>{{ blogpost.title }}</h1>
 
     <p><strong>Post Date:</strong> {{ blogpost.post_date }}</p>
-    <p><strong>Author:</strong> <a href="">{{ blogpost.author }}</a></p>
+    <p><strong>Author:</strong> <a href="{{ blogpost.author.get_absolute_url }}">{{ blogpost.author }}</a></p>
     <p><strong>Description:</strong></p>
     <p>{{ blogpost.description }}</p>
 
