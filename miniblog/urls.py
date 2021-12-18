@@ -25,6 +25,8 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     # Add URL maps to redirect the base URL to the application
     path('', RedirectView.as_view(url='blog/', permanent=True)),
+    # Add Django site authentication urls (for login, logout, password management)
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 # Use static() to add url mapping to serve static files during development (only)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
