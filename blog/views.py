@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.db.models import fields
+from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from .models import BlogPost, BlogAuthor, BlogComment
 
@@ -38,3 +39,23 @@ class BlogAuthorListView(generic.ListView):
 
 class BlogAuthorDetailView(generic.DetailView):
     model = BlogAuthor
+
+class BlogCommentCreate(generic.edit.CreateView):
+    model = BlogComment
+    fields = ['description']
+
+    def form_valid(self, form):
+        """
+        Add author and associated blog to form data before saving it as valid (so it is saved to model)
+        """
+        # Add logged-in user as author of comment
+        form.instance.author = self.request.author
+
+        # Associate comment with blog post based on passed id
+        form.instance.blog_post = get_object_or_404(BlogPost, pk = self.kwargs['pk'])
+
+        # Call super-class form validation behavior
+        return super(BlogCommentCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        pass
