@@ -1,5 +1,7 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import fields
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
 from django.views import generic
 from .models import BlogPost, BlogAuthor, BlogComment
 
@@ -40,16 +42,23 @@ class BlogAuthorListView(generic.ListView):
 class BlogAuthorDetailView(generic.DetailView):
     model = BlogAuthor
 
-class BlogCommentCreate(generic.edit.CreateView):
+class BlogCommentCreate(LoginRequiredMixin, generic.edit.CreateView):
     model = BlogComment
     fields = ['description']
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(BlogCommentCreate, self).get_context_data(**kwargs)
+        # Get the blog post object from the "pk" parameter and add it to the context
+        context['blogpost'] = get_object_or_404(BlogPost, pk = self.kwargs['pk'])
+        return context
 
     def form_valid(self, form):
         """
         Add author and associated blog to form data before saving it as valid (so it is saved to model)
         """
         # Add logged-in user as author of comment
-        form.instance.author = self.request.author
+        form.instance.author = self.request.user
 
         # Associate comment with blog post based on passed id
         form.instance.blog_post = get_object_or_404(BlogPost, pk = self.kwargs['pk'])
@@ -58,4 +67,4 @@ class BlogCommentCreate(generic.edit.CreateView):
         return super(BlogCommentCreate, self).form_valid(form)
 
     def get_success_url(self):
-        pass
+        return get_object_or_404(BlogPost, pk = self.kwargs['pk']).get_absolute_url()

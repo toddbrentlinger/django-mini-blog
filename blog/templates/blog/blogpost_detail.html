@@ -15,6 +15,6 @@
             <hr>
             <p>{{ comment.author }} ({{ comment.post_date_time }}) - {{ comment.description }}</p>
         {% endfor %}
-        <a href="">Add a new comment</a>
+        <a href="{% url 'blogcomment-create' blogpost.id %}">Add a new comment</a>
     </div>
 {% endblock %}
