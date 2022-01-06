@@ -43,7 +43,7 @@ class BlogPost(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.title} - {self.author} - {self.id}'
+        return f'{self.title} - {self.author}'
 
 class BlogComment(models.Model):
     """Model representing a comment"""
